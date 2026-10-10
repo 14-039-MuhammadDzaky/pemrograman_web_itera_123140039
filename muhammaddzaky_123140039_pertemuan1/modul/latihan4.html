@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan 4 - Form Validation, LocalStorage, API & DOM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    body.dark-mode {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 2rem 1rem; transition: background-color 0.3s, color 0.3s; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .header { margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 1.8rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    
+    /* Toggle Dark Mode Switch */
+    .theme-toggle-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; }
+
+    /* Form & Validation styles */
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.35rem; }
+    input, select { width: 100%; padding: 0.65rem 0.8rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--card-bg); color: var(--text); }
+    input.error { border-color: var(--danger); }
+    .error-msg { color: var(--danger); font-size: 0.8rem; margin-top: 0.25rem; display: block; }
+    
+    button { background: var(--primary); color: white; border: none; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    button:hover { background: var(--primary-hover); }
+
+    /* Table styles */
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.9rem; }
+    th { background: rgba(0, 0, 0, 0.03); font-weight: 700; }
+
+    /* API Post Cards */
+    .posts-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1rem; }
+    .post-card { background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+    .post-card h3 { font-size: 1rem; color: var(--primary); margin-bottom: 0.5rem; text-transform: capitalize; }
+    .post-card p { font-size: 0.875rem; color: var(--text-muted); }
+
+    /* Pagination controls */
+    .pagination { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+
+    /* Todo List Items */
+    .todo-list { list-style: none; margin-top: 1rem; }
+    .todo-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.5rem; background: rgba(0, 0, 0, 0.01); }
+    .todo-item.completed span { text-decoration: line-through; opacity: 0.6; }
+    .todo-actions { display: flex; gap: 0.5rem; }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    .btn-danger { background: var(--danger); }
+    .btn-success { background: var(--success); }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .nav-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav-tabs">
+      <a href="latihan1.html" class="nav-tab"><i class="fa-solid fa-code"></i> Latihan 1</a>
+      <a href="latihan2.html" class="nav-tab"><i class="fa-solid fa-repeat"></i> Latihan 2</a>
+      <a href="latihan3.html" class="nav-tab"><i class="fa-solid fa-users-gear"></i> Latihan 3</a>
+      <a href="latihan4.html" class="nav-tab active"><i class="fa-solid fa-layer-group"></i> Latihan 4</a>
+    </nav>
+    
+    <div class="header">
+      <div>
+        <h1><i class="fa-solid fa-layer-group"></i> Latihan 4: Form Validation, LocalStorage & API</h1>
+        <p>Praktikum PAW Pertemuan 1 - Muhammad Dzaky (123140039)</p>
+      </div>
+      <!-- Dark Mode Toggle -->
+      <button class="theme-toggle-btn" id="darkToggleBtn">
+        <i class="fa-solid fa-moon"></i> <span id="darkToggleLabel">Dark Mode</span>
+      </button>
+    </div>
+
+    <!-- 1 & 2. Form Input Mahasiswa dengan Validasi & LocalStorage -->
+    <div class="card">
+      <h2><i class="fa-solid fa-user-plus"></i> 1 & 2. Form Input Mahasiswa (Validasi & LocalStorage Persisten)</h2>
+      <form id="mhsFormValidation" novalidate>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="valNama">Nama Mahasiswa (Min. 3 Karakter):</label>
+            <input type="text" id="valNama" placeholder="Contoh: Muhammad Dzaky">
+            <small id="errNama" class="error-msg"></small>
+          </div>
+          <div class="form-group">
+            <label for="valNim">NIM (Angka, Min. 8 Digit):</label>
+            <input type="text" id="valNim" placeholder="Contoh: 123140039">
+            <small id="errNim" class="error-msg"></small>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="valJurusan">Jurusan:</label>
+            <input type="text" id="valJurusan" placeholder="Contoh: Teknik Informatika">
+            <small id="errJurusan" class="error-msg"></small>
+          </div>
+          <div class="form-group">
+            <label for="valNilai">Nilai (0 - 100):</label>
+            <input type="number" id="valNilai" placeholder="Contoh: 90" min="0" max="100">
+            <small id="errNilai" class="error-msg"></small>
+          </div>
+        </div>
+        <button type="submit"><i class="fa-solid fa-save"></i> Simpan ke LocalStorage</button>
+      </form>
+
+      <h3 style="margin-top: 1.5rem; font-size: 1rem;">Daftar Mahasiswa di LocalStorage:</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Jurusan</th>
+            <th>Nilai</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="storageMhsTableBody">
+          <!-- Populated from LocalStorage -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3 & 5. Fetch API JSONPlaceholder + Search Filter + Pagination -->
+    <div class="card">
+      <h2><i class="fa-solid fa-cloud-arrow-down"></i> 3 & 5. Integrasi API (Search Filter & Pagination)</h2>
+      <div class="form-group">
+        <label for="apiSearchInput">Cari Post Berdasarkan Title:</label>
+        <input type="text" id="apiSearchInput" placeholder="Ketik kata kunci judul post...">
+      </div>
+
+      <div class="posts-grid" id="postsContainer">
+        <!-- API Posts render here -->
+      </div>
+
+      <div class="pagination">
+        <button id="btnPrevPage" class="btn-sm"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+        <span id="pageIndicator" style="font-weight: 600; font-size: 0.9rem;">Halaman 1 dari 1</span>
+        <button id="btnNextPage" class="btn-sm">Next <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- 6. Aplikasi Todo List Sederhana -->
+    <div class="card">
+      <h2><i class="fa-solid fa-list-check"></i> 6. Aplikasi Todo List (DOM & LocalStorage)</h2>
+      <div style="display: flex; gap: 0.5rem;">
+        <input type="text" id="todoInput" placeholder="Tuliskan tugas baru..." style="flex:1;">
+        <button id="btnAddTodo"><i class="fa-solid fa-plus"></i> Tambah</button>
+      </div>
+
+      <ul class="todo-list" id="todoListContainer">
+        <!-- Render todos -->
+      </ul>
+    </div>
+
+  </div>
+
+  <script>
+    /**
+     * LATIHAN 4: Form Validation, LocalStorage, API & DOM Manipulation
+     * Praktikum PAW - Muhammad Dzaky (123140039)
+     */
+
+    // Global State
+    let mhsLocalStorageData = [];
+    let apiPosts = [];
+    let filteredPosts = [];
+    let currentPage = 1;
+    const postsPerPage = 4;
+    let todoList = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initDarkMode();
+      initFormValidation();
+      loadMhsFromStorage();
+      initApiPosts();
+      initTodoList();
+    });
+
+    // ==========================================
+    // 4. DARK MODE TOGGLE (Class Manipulation & LocalStorage)
+    // ==========================================
+    function initDarkMode() {
+      const darkBtn = document.getElementById("darkToggleBtn");
+      const darkLabel = document.getElementById("darkToggleLabel");
+
+      const isDark = localStorage.getItem("theme") === "dark";
+      if (isDark) {
+        document.body.classList.add("dark-mode");
+        darkLabel.innerText = "Light Mode";
+        darkBtn.querySelector("i").className = "fa-solid fa-sun";
+      }
+
+      darkBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const currentlyDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("theme", currentlyDark ? "dark" : "light");
+        
+        darkLabel.innerText = currentlyDark ? "Light Mode" : "Dark Mode";
+        darkBtn.querySelector("i").className = currentlyDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+      });
+    }
+
+    // ==========================================
+    // 1 & 2. FORM VALIDATION & PERSISTENT LOCALSTORAGE MAHASISWA
+    // ==========================================
+    function initFormValidation() {
+      const form = document.getElementById("mhsFormValidation");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const namaInput = document.getElementById("valNama");
+        const nimInput = document.getElementById("valNim");
+        const jurusanInput = document.getElementById("valJurusan");
+        const nilaiInput = document.getElementById("valNilai");
+
+        const errNama = document.getElementById("errNama");
+        const errNim = document.getElementById("errNim");
+        const errJurusan = document.getElementById("errJurusan");
+        const errNilai = document.getElementById("errNilai");
+
+        // Reset error messages
+        errNama.innerText = "";
+        errNim.innerText = "";
+        errJurusan.innerText = "";
+        errNilai.innerText = "";
+        [namaInput, nimInput, jurusanInput, nilaiInput].forEach(inp => inp.classList.remove("error"));
+
+        let isValid = true;
+
+        if (namaInput.value.trim().length < 3) {
+          errNama.innerText = "Nama mahasiswa minimal 3 karakter!";
+          namaInput.classList.add("error");
+          isValid = false;
+        }
+
+        if (!/^\d{8,}$/.test(nimInput.value.trim())) {
+          errNim.innerText = "NIM harus berupa angka minimal 8 digit!";
+          nimInput.classList.add("error");
+          isValid = false;
+        }
+
+        if (jurusanInput.value.trim() === "") {
+          errJurusan.innerText = "Jurusan wajib diisi!";
+          jurusanInput.classList.add("error");
+          isValid = false;
+        }
+
+        const n = parseFloat(nilaiInput.value);
+        if (isNaN(n) || n < 0 || n > 100) {
+          errNilai.innerText = "Nilai harus berupa angka antara 0 - 100!";
+          nilaiInput.classList.add("error");
+          isValid = false;
+        }
+
+        if (isValid) {
+          const newMhs = {
+            nama: namaInput.value.trim(),
+            nim: nimInput.value.trim(),
+            jurusan: jurusanInput.value.trim(),
+            nilai: n
+          };
+
+          mhsLocalStorageData.push(newMhs);
+          localStorage.setItem("mhs_latihan4", JSON.stringify(mhsLocalStorageData));
+          
+          form.reset();
+          loadMhsFromStorage();
+          alert("Data mahasiswa berhasil disimpan ke LocalStorage! ✅");
+        }
+      });
+    }
+
+    function loadMhsFromStorage() {
+      const saved = localStorage.getItem("mhs_latihan4");
+      if (saved) {
+        try {
+          mhsLocalStorageData = JSON.parse(saved);
+        } catch(e) {
+          mhsLocalStorageData = [];
+        }
+      } else {
+        // Default mock data if empty
+        mhsLocalStorageData = [
+          { nama: "Muhammad Dzaky", nim: "123140039", jurusan: "Teknik Informatika", nilai: 98 },
+          { nama: "Siti Rahma", nim: "123140099", jurusan: "Teknik Informatika", nilai: 88 }
+        ];
+        localStorage.setItem("mhs_latihan4", JSON.stringify(mhsLocalStorageData));
+      }
+      renderStorageMhsTable();
+    }
+
+    function renderStorageMhsTable() {
+      const tbody = document.getElementById("storageMhsTableBody");
+      tbody.innerHTML = "";
+
+      if (mhsLocalStorageData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Belum ada data di LocalStorage.</td></tr>`;
+        return;
+      }
+
+      mhsLocalStorageData.forEach((item, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${item.nim}</strong></td>
+          <td>${item.nama}</td>
+          <td>${item.jurusan}</td>
+          <td>${item.nilai}</td>
+          <td>
+            <button onclick="deleteStorageMhs(${idx})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function deleteStorageMhs(index) {
+      mhsLocalStorageData.splice(index, 1);
+      localStorage.setItem("mhs_latihan4", JSON.stringify(mhsLocalStorageData));
+      renderStorageMhsTable();
+    }
+
+    // ==========================================
+    // 3 & 5. API POSTS FETCH, SEARCH & PAGINATION
+    // ==========================================
+    async function initApiPosts() {
+      const searchInput = document.getElementById("apiSearchInput");
+      const btnPrev = document.getElementById("btnPrevPage");
+      const btnNext = document.getElementById("btnNextPage");
+
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+        apiPosts = await res.json();
+        filteredPosts = [...apiPosts];
+        renderApiPage();
+      } catch (err) {
+        document.getElementById("postsContainer").innerHTML = `<p style="color:red;">Gagal memuat API posts: ${err.message}</p>`;
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        filteredPosts = apiPosts.filter(p => p.title.toLowerCase().includes(query));
+        currentPage = 1;
+        renderApiPage();
+      });
+
+      btnPrev.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderApiPage();
+        }
+      });
+
+      btnNext.addEventListener("click", () => {
+        const maxPage = Math.ceil(filteredPosts.length / postsPerPage) || 1;
+        if (currentPage < maxPage) {
+          currentPage++;
+          renderApiPage();
+        }
+      });
+    }
+
+    function renderApiPage() {
+      const container = document.getElementById("postsContainer");
+      const pageIndicator = document.getElementById("pageIndicator");
+      const btnPrev = document.getElementById("btnPrevPage");
+      const btnNext = document.getElementById("btnNextPage");
+
+      container.innerHTML = "";
+
+      const totalPages = Math.ceil(filteredPosts.length / postsPerPage) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const pageItems = filteredPosts.slice(startIndex, startIndex + postsPerPage);
+
+      if (pageItems.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada post yang cocok dengan pencarian.</p>`;
+      } else {
+        pageItems.forEach(post => {
+          const card = document.createElement("div");
+          card.className = "post-card";
+          card.innerHTML = `
+            <h3>#${post.id} ${post.title}</h3>
+            <p>${post.body}</p>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      pageIndicator.innerText = `Halaman ${currentPage} dari ${totalPages}`;
+      btnPrev.disabled = (currentPage === 1);
+      btnNext.disabled = (currentPage === totalPages);
+    }
+
+    // ==========================================
+    // 6. TODO LIST APP (DOM & LOCALSTORAGE)
+    // ==========================================
+    function initTodoList() {
+      const savedTodos = localStorage.getItem("todos_latihan4");
+      if (savedTodos) {
+        try {
+          todoList = JSON.parse(savedTodos);
+        } catch(e) {
+          todoList = [];
+        }
+      } else {
+        todoList = [
+          { text: "Menyelesaikan Tugas Praktikum PAW Pertemuan 1", completed: true },
+          { text: "Mempelajari DOM Manipulation & LocalStorage", completed: false }
+        ];
+        saveTodos();
+      }
+
+      document.getElementById("btnAddTodo").addEventListener("click", addTodo);
+      document.getElementById("todoInput").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addTodo();
+      });
+
+      renderTodoList();
+    }
+
+    function saveTodos() {
+      localStorage.setItem("todos_latihan4", JSON.stringify(todoList));
+    }
+
+    function addTodo() {
+      const input = document.getElementById("todoInput");
+      const text = input.value.trim();
+      if (text === "") return;
+
+      todoList.push({ text, completed: false });
+      saveTodos();
+      input.value = "";
+      renderTodoList();
+    }
+
+    function toggleTodo(index) {
+      todoList[index].completed = !todoList[index].completed;
+      saveTodos();
+      renderTodoList();
+    }
+
+    function deleteTodo(index) {
+      todoList.splice(index, 1);
+      saveTodos();
+      renderTodoList();
+    }
+
+    function renderTodoList() {
+      const container = document.getElementById("todoListContainer");
+      container.innerHTML = "";
+
+      if (todoList.length === 0) {
+        container.innerHTML = `<li style="text-align:center; color: var(--text-muted); padding: 1rem;">Belum ada item todo list.</li>`;
+        return;
+      }
+
+      todoList.forEach((todo, idx) => {
+        const li = document.createElement("li");
+        li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+        li.innerHTML = `
+          <span>${todo.completed ? '✅ ' : '📌 '} ${todo.text}</span>
+          <div class="todo-actions">
+            <button onclick="toggleTodo(${idx})" class="btn-sm btn-success">${todo.completed ? 'Batal' : 'Selesai'}</button>
+            <button onclick="deleteTodo(${idx})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `;
+        container.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan 2 - Perulangan, Fungsi & Event Handler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 2rem 1rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header { margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+    .header h1 { font-size: 1.8rem; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
+    .header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.2rem; margin-bottom: 1rem; color: #1e293b; display: flex; align-items: center; gap: 0.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.35rem; color: #334155; }
+    input { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; }
+    input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
+    button { background: var(--primary); color: white; border: none; padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    button:hover { background: var(--primary-hover); }
+    .result-box { margin-top: 1rem; padding: 1rem; background: #f1f5f9; border-radius: 8px; font-family: monospace; font-size: 0.95rem; max-height: 250px; overflow-y: auto; white-space: pre-wrap; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: var(--card-bg);
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .nav-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav-tabs">
+      <a href="latihan1.html" class="nav-tab"><i class="fa-solid fa-code"></i> Latihan 1</a>
+      <a href="latihan2.html" class="nav-tab active"><i class="fa-solid fa-repeat"></i> Latihan 2</a>
+      <a href="latihan3.html" class="nav-tab"><i class="fa-solid fa-users-gear"></i> Latihan 3</a>
+      <a href="latihan4.html" class="nav-tab"><i class="fa-solid fa-layer-group"></i> Latihan 4</a>
+    </nav>
+    <div class="header">
+      <h1><i class="fa-solid fa-repeat"></i> Latihan 2: Perulangan, Fungsi & Event Handler</h1>
+      <p>Praktikum PAW Pertemuan 1 - Muhammad Dzaky (123140039)</p>
+    </div>
+
+    <!-- 1. Tabel Perkalian -->
+    <div class="card">
+      <h2><i class="fa-solid fa-table-cells"></i> 1. Tabel Perkalian (1 - 10)</h2>
+      <div class="form-group">
+        <label for="angkaPerkalian">Pilih Angka Perkalian:</label>
+        <input type="number" id="angkaPerkalian" value="7" min="1" max="100">
+      </div>
+      <button onclick="tampilkanPerkalianUI()">Generate Tabel Perkalian</button>
+      <div id="perkalianResult" class="result-box"></div>
+    </div>
+
+    <!-- 2. Hitung Faktorial -->
+    <div class="card">
+      <h2><i class="fa-solid fa-square-root-variable"></i> 2. Hitung Faktorial (n!)</h2>
+      <div class="form-group">
+        <label for="angkaFaktorial">Masukkan Angka (0-20):</label>
+        <input type="number" id="angkaFaktorial" value="5" min="0" max="20">
+      </div>
+      <button onclick="hitungFaktorialUI()">Hitung Faktorial</button>
+      <div id="faktorialResult" class="result-box"></div>
+    </div>
+
+    <!-- 3. Cek Bilangan Prima -->
+    <div class="card">
+      <h2><i class="fa-solid fa-hashtag"></i> 3. Cek Bilangan Prima</h2>
+      <div class="form-group">
+        <label for="angkaPrima">Masukkan Angka Bulat:</label>
+        <input type="number" id="angkaPrima" value="29" min="1">
+      </div>
+      <button onclick="cekPrimaUI()">Cek Bilangan Prima</button>
+      <div id="primaResult" class="result-box"></div>
+    </div>
+
+    <!-- 4. Kalkulator BMI -->
+    <div class="card">
+      <h2><i class="fa-solid fa-weight-scale"></i> 4. Kalkulator Body Mass Index (BMI)</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="beratBMI">Berat Badan (kg):</label>
+          <input type="number" id="beratBMI" value="65" min="1" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="tinggiBMI">Tinggi Badan (cm):</label>
+          <input type="number" id="tinggiBMI" value="170" min="1" step="1">
+        </div>
+      </div>
+      <button id="btnHitungBMI">Hitung BMI</button>
+      <div id="bmiResult" class="result-box"></div>
+    </div>
+
+    <!-- 5. Program FizzBuzz -->
+    <div class="card">
+      <h2><i class="fa-solid fa-fire"></i> 5. Program FizzBuzz (1 - 100)</h2>
+      <button onclick="jalankanFizzBuzzUI()">Jalankan FizzBuzz</button>
+      <div id="fizzbuzzResult" class="result-box"></div>
+    </div>
+
+  </div>
+
+  <script>
+    /**
+     * LATIHAN 2: Perulangan, Fungsi & Event Handler
+     * Praktikum PAW - Muhammad Dzaky (123140039)
+     */
+
+    // 1. Loop Tabel Perkalian (1 s/d 10)
+    function cetakTabelPerkalian(angka) {
+      let output = `Tabel Perkalian untuk Angka ${angka}:\n`;
+      output += `-------------------------------\n`;
+      for (let i = 1; i <= 10; i++) {
+        output += `${angka} x ${i} = ${angka * i}\n`;
+      }
+      return output;
+    }
+
+    // 2. Fungsi Hitung Faktorial
+    function hitungFaktorial(n) {
+      if (n < 0) return "Faktorial tidak terdefinisi untuk angka negatif.";
+      if (n === 0 || n === 1) return 1;
+      let hasil = 1;
+      for (let i = 2; i <= n; i++) {
+        hasil *= i;
+      }
+      return hasil;
+    }
+
+    // 3. Fungsi Cek Bilangan Prima
+    function cekPrima(n) {
+      if (n <= 1) return false;
+      if (n <= 3) return true;
+      if (n % 2 === 0 || n % 3 === 0) return false;
+      for (let i = 5; i * i <= n; i += 6) {
+        if (n % i === 0 || n % (i + 2) === 0) return false;
+      }
+      return true;
+    }
+
+    // 4. Kalkulator BMI & Event Handler
+    function hitungBMI(beratKg, tinggiCm) {
+      const tinggiM = tinggiCm / 100;
+      if (tinggiM <= 0 || beratKg <= 0) return { bmi: 0, kategori: "Input tidak valid" };
+
+      const bmi = beratKg / (tinggiM * tinggiM);
+      let kategori = "";
+
+      if (bmi < 18.5) {
+        kategori = "Kekurangan Berat Badan (Kurus) ⚠️";
+      } else if (bmi >= 18.5 && bmi <= 24.9) {
+        kategori = "Berat Badan Normal (Ideal) ✅";
+      } else if (bmi >= 25.0 && bmi <= 29.9) {
+        kategori = "Kelebihan Berat Badan (Gemuk) ⚠️";
+      } else {
+        kategori = "Obesitas 🚨";
+      }
+
+      return { bmi: bmi.toFixed(2), kategori };
+    }
+
+    // 5. Program FizzBuzz (1 - 100)
+    function runFizzBuzz() {
+      let list = [];
+      for (let i = 1; i <= 100; i++) {
+        if (i % 3 === 0 && i % 5 === 0) {
+          list.push(`${i}: FizzBuzz ⚡`);
+        } else if (i % 3 === 0) {
+          list.push(`${i}: Fizz`);
+        } else if (i % 5 === 0) {
+          list.push(`${i}: Buzz`);
+        } else {
+          list.push(`${i}`);
+        }
+      }
+      return list.join("\n");
+    }
+
+    // UI Triggers
+    document.addEventListener("DOMContentLoaded", () => {
+      tampilkanPerkalianUI();
+      hitungFaktorialUI();
+      cekPrimaUI();
+      jalankanFizzBuzzUI();
+
+      const btnBMI = document.getElementById("btnHitungBMI");
+      if (btnBMI) {
+        btnBMI.addEventListener("click", () => {
+          const b = parseFloat(document.getElementById("beratBMI").value);
+          const t = parseFloat(document.getElementById("tinggiBMI").value);
+          const res = hitungBMI(b, t);
+          document.getElementById("bmiResult").innerText = `Skor BMI : ${res.bmi}\nKategori : ${res.kategori}`;
+        });
+        // Trigger initial calculation
+        btnBMI.click();
+      }
+    });
+
+    function tampilkanPerkalianUI() {
+      const val = parseInt(document.getElementById("angkaPerkalian").value) || 1;
+      document.getElementById("perkalianResult").innerText = cetakTabelPerkalian(val);
+    }
+
+    function hitungFaktorialUI() {
+      const val = parseInt(document.getElementById("angkaFaktorial").value) || 0;
+      const res = hitungFaktorial(val);
+      document.getElementById("faktorialResult").innerText = `${val}! = ${res}`;
+    }
+
+    function cekPrimaUI() {
+      const val = parseInt(document.getElementById("angkaPrima").value) || 1;
+      const isP = cekPrima(val);
+      document.getElementById("primaResult").innerText = `Angka ${val} adalah ${isP ? "BILANGAN PRIMA ✅" : "Bukan Bilangan Prima ❌"}`;
+    }
+
+    function jalankanFizzBuzzUI() {
+      document.getElementById("fizzbuzzResult").innerText = runFizzBuzz();
+    }
+  </script>
+</body>
+</html>
