@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description
+    content=" Modul Latihan Praktikum PAW Pertemuan 2 - JavaScript Next Gen (ES6+) & Async Programming. Mahasiswa:
+    Muhammad Dzaky (123140039) ITERA.">
+
+  <title>Modul Praktikum Pertemuan 2 | JavaScript Next Gen (ES6+)</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <lin
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header Section -->
+    <header class="modul-header">
+      <div class="modul-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span>Modul Praktikum Pertemuan 2</span>
+      </div>
+      <h1>JavaScript Next Gen (ES6+) &amp; Async Programming</h1>
+      <p>Laboratorium Praktikum Pengembangan Aplikasi Web (PAW) &bull; Institut Teknologi Sumatera (ITERA)</p>
+    </header>
+
+    <!-- Student Identity Profile -->
+    <section class="identity-card">
+      <div class="identity-left">
+        <div class="avatar-circle">MD</div>
+        <div class="id-text">
+          <h3>Muhammad Dzaky</h3>
+          <p>NIM: <strong>123140039</strong> &bull; Kelas Praktikum: <strong>RA</strong> &bull; Prodi:
+            <strong>Teknik
+              Informatika</strong>
+          </p>
+        </div>
+      </div>
+      <div class="identity-right">
+        <span class="modul-badge"
+          style="margin: 0; background: rgba(37, 99, 235, 0.2); color: #60a5fa; border-color: rgba(59, 130, 246, 0.4);">
+          Semester Ganjil 2026/2027
+        </span>
+      </div>
+    </section>
+
+    <!-- Interactive Execution Control Bar -->
+    <section class="control-bar">
+      <div class="control-title">
+        <h2>Panel Eksekusi Interaktif</h2>
+        <span>Jalankan 12 demo materi standar panduan praktikum atau solusi latihan komprehensif</span>
+      </div>
+      <div class="button-group">
+        <!-- Button dengan id="runBtn" sesuai spesifikasi modul -->
+        <button id="runBtn" class="btn btn-primary" title="Eksekusi 12 Demo Materi">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          <span>Run Demo Materi (12 Demo)</span>
+        </button>
+
+        <button id="runLatihanBtn" class="btn btn-success" title="Eksekusi Solusi Latihan Praktikum">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span>Jalankan Solusi Latihan</span>
+        </button>
+
+        <button id="clearBtn" class="btn btn-outline" title="Bersihkan Layar Output">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
+          <span>Bersihkan</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 6 Materi Overview Grid Cards -->
+    <section class="materi-grid">
+
+      <!-- Modul 1 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 01</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 1 &amp; 2</small>
+        </div>
+        <h3>Let, Const &amp; Arrow Functions</h3>
+        <p>Deklarasi variabel modern dengan block-scope, proteksi mutasi nilai, dan penulisan fungsi ringkas
+          berkarakteristik lambda.</p>
+        <ul class="materi-features">
+          <li>let vs var</li>
+          <li>const immutability</li>
+          <li>Implicit return</li>
+          <li>Lambda syntax</li>
+        </ul>
+      </article>
+
+      <!-- Modul 2 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 02</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 3</small>
+        </div>
+        <h3>Template Literals</h3>
+        <p>Interpolasi string dinamis dengan ekspresi JavaScript `${...}` dan kemudahan penyusunan string
+          multi-baris
+          tanpa karakter escape `\n`.</p>
+        <ul class="materi-features">
+          <li>Interpolasi ${}</li>
+          <li>Multi-line Strings</li>
+          <li>Expression Parsing</li>
+          <li>HTML Rendering</li>
+        </ul>
+      </article>
+
+      <!-- Modul 3 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 03</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 4 &amp; 5</small>
+        </div>
+        <h3>Destructuring, Spread &amp; Rest</h3>
+        <p>Pembongkaran properti objek/array bertingkat secara ekspresif serta pemanfaatan operator titik tiga
+          (`...`)
+          untuk kloning dan rest parameter.</p>
+        <ul class="materi-features">
+          <li>Nested Object</li>
+          <li>Spread Immutability</li>
+          <li>Rest Parameter</li>
+          <li>Swap Variables</li>
+        </ul>
+      </article>
+
+      <!-- Modul 4 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 04</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 6, 7 &amp; 8</small>
+        </div>
+        <h3>Classes &amp; Object Literals</h3>
+        <p>Pemrograman berorientasi objek modern dengan sintaks class, pewarisan sifat (`extends`), konstruktor
+          `super`,
+          getter/setter, dan properti dinamis.</p>
+        <ul class="materi-features">
+          <li>ES6 Classes</li>
+          <li>Inheritance / extends</li>
+          <li>Default Parameters</li>
+          <li>Computed Keys</li>
+        </ul>
+      </article>
+
+      <!-- Modul 5 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 05</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 9 &amp; 10</small>
+        </div>
+        <h3>Modern Array Methods</h3>
+        <p>Pengolahan data koleksi deklaratif menggunakan Higher-Order Functions: `map()`, `filter()`,
+          `reduce()`,
+          `find()`, `flat()`, dan method chaining.</p>
+        <ul class="materi-features">
+          <li>map, filter, find</li>
+          <li>reduce agregasi</li>
+          <li>Method Chaining</li>
+          <li>flat &amp; includes</li>
+        </ul>
+      </article>
+
+      <!-- Modul 6 -->
+      <article class="materi-card">
+        <div class="materi-badge-row">
+          <span class="materi-num">Materi 06</span>
+          <small style="color: var(--itera-gold); font-weight: 600;">Demo 11 &amp; 12</small>
+        </div>
+        <h3>Async Programming</h3>
+        <p>Manajemen operasi asinkron non-blocking menggunakan Promise chaining, Promise.all/race, serta sintaks
+          modern
+          bersih `async/await` dengan `try/catch`.</p>
+        <ul class="materi-features">
+          <li>Promises (.then/.catch)</li>
+          <li>Promise.all &amp; race</li>
+          <li>Async / Await</li>
+          <li>Parallel Fetching</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <!-- Output Display Area (Target: id="output") -->
+    <main class="output-section">
+      <div class="output-section-header">
+        <h2>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"
+            style="color: #60a5fa;">
+            <polyline points="4 17 10 11 4 5" />
+            <line x1="12" y1="19" x2="20" y2="19" />
+          </svg>
+          <span>Hasil Eksekusi Kode (Console &amp; DOM Output)</span>
+        </h2>
+      </div>
+
+      <!-- Container output sesuai spesifikasi modul -->
+      <div id="output" class="output-container">
+        <div class="empty-prompt">
+          Klik tombol <strong>"Run Demo Materi (12 Demo)"</strong> untuk memverifikasi 12 materi panduan, atau
+          tombol
+          <strong>"Jalankan Solusi Latihan"</strong> untuk melihat hasil pengerjaan latihan mandiri.
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="modul-footer">
+      <p>Praktikum Pengembangan Aplikasi Web (PAW) Pertemuan 2 &bull; Institut Teknologi Sumatera (ITERA)</p>
+      <p>Disusun oleh <strong>Muhammad Dzaky (123140039 - Kelas RA)</strong></p>
+      <footer>
+
+  </div>
+
+  <!-- ES6 Module Script -->
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

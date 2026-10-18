@@ -19,3 +19,4 @@ Repositori ini digunakan untuk mendokumentasikan seluruh latihan & tugas  prakti
 | No | Folder Tugas | Pertemuan | Status / Deskripsi |
 | :-: | :--- | :--- | :--- |
 | **01** | [`muhammaddzaky_123140039_pertemuan1/`](./muhammaddzaky_123140039_pertemuan1/) |  1 | Aplikasi Kasir & Keranjang Belanja Sederhana |
+| **02** | [`muhammaddzaky_123140039_pertemuan2/`](./muhammaddzaky_123140039_pertemuan2/) |  2 | Personal Dashboard |
