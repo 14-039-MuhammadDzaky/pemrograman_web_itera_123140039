@@ -1,16 +1,25 @@
-# React + Vite
+# Book Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Deskripsi Tugas
+Aplikasi web sederhana berbasis **React** dan **Vite** untuk mengelola data buku. Fitur utama meliputi:
+- Menambah buku baru
+- Mengedit data buku yang ada
+- Menampilkan daftar buku dalam tampilan dashboard
 
-Currently, two official plugins are available:
+## Dokumentasi Tugas
+Berikut adalah dokumentasi visual dari masing-masing fitur yang telah diimplementasikan.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Dashboard
+Menampilkan daftar semua buku yang telah ditambahkan.
 
-## React Compiler
+![Dashboard](Screenshoots/dashboard.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Tambah Buku
+Form untuk menambah data buku baru.
 
-## Expanding the ESLint configuration
+![Tambah Buku](Screenshoots/tambah%20book.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Edit Buku
+Form untuk mengubah data buku yang dipilih.
+
+![Edit Buku](Screenshoots/edit%20book.png)
