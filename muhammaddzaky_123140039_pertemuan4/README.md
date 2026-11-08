@@ -24,6 +24,7 @@ muhammaddzaky_123140039_pertemuan4/
 ├── math_operations.py        # Modul Kustom Matematika & Konversi Suhu (Soal 3)
 ├── main.py                   # Program Utama Demonstrasi Modul math_operations (Soal 3)
 ├── README.md                 # Dokumentasi Lengkap Tugas Praktikum
+├── .gitignore                # Konfigurasi Pengecualian Berkas Git (venv, __pycache__, dll.)
 └── Screenshoots/             # Direktori Bukti Hasil Eksekusi Program di Terminal
     ├── tugas1.png            # Screenshot Bukti Eksekusi Soal 1
     ├── tugas2.png            # Screenshot Bukti Eksekusi Soal 2
