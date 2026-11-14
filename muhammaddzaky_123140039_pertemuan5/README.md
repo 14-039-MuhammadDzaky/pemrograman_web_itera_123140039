@@ -127,5 +127,3 @@ python main.py
 ### 2. Tugas Perpustakaan - Sirkulasi Peminjaman, Validasi Proteksi, dan Polimorfisme Denda
 ![Tugas Perpustakaan Bagian 2](Screenshoots/tugas_perpustakaan_part2.png)
 
-### 3. Modul Latihan - Polimorfisme Pembayaran (Duck Typing) & Operator Overloading Dompet
-![Latihan Polimorfisme](Screenshoots/latihan_polymorphism.png)
